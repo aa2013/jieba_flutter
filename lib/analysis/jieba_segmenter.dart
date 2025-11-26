@@ -13,9 +13,9 @@ enum SegMode { INDEX, SEARCH }
 class JiebaSegmenter {
   static WordDictionary? wordDict;
   static FinalSeg? finalSeg;
-  static Future<void>  init() async{
-    wordDict = await WordDictionary.getInstance();
-    finalSeg = await FinalSeg.getInstance();
+  static Future<void>  init(String dirPath) async{
+    wordDict = await WordDictionary.getInstance(dirPath);
+    finalSeg = await FinalSeg.getInstance(dirPath);
   }
   /// initialize the user dictionary.
   ///

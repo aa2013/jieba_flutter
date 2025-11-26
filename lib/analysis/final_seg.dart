@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 
 import 'node.dart';
@@ -19,15 +21,15 @@ class FinalSeg {
 
   FinalSeg();
 
-  static Future<FinalSeg> getInstance() async {
+  static Future<FinalSeg> getInstance([String? dirPath]) async {
     if (null == singleInstance) {
       singleInstance = FinalSeg();
-      await singleInstance?.loadModel();
+      await singleInstance?.loadModel(dirPath);
     }
     return singleInstance!;
   }
 
-  Future<void> loadModel() async {
+  Future<void> loadModel([String? dirPath]) async {
     prevStatus = {};
     prevStatus.put('B', ['E', 'S']);
     prevStatus.put('M', ['M', 'B']);
@@ -57,8 +59,12 @@ class FinalSeg {
     transS.put('B', -0.7211965654669841);
     transS.put('S', -0.6658631448798212);
     trans.put('S', transS);
-
-    var file = await rootBundle.loadString(PROB_EMIT);
+    String file;
+    if(dirPath == null) {
+      file = await rootBundle.loadString(PROB_EMIT);
+    }else{
+      file = await File(dirPath + "/prob_emit.txt").readAsStringSync();
+    }
 
     emit = {};
     Map<String, double> values = {};

@@ -21,10 +21,10 @@ class WordDictionary {
 
   WordDictionary();
 
-  static Future<WordDictionary> getInstance() async {
+  static Future<WordDictionary> getInstance([String? dirPath]) async {
     if (singleton == null) {
       singleton = WordDictionary();
-      await singleton?.loadDict();
+      await singleton?.loadDict(dirPath);
       return singleton!;
     }
     return singleton!;
@@ -66,9 +66,14 @@ class WordDictionary {
     freqs.clear();
   }
 
-  Future<void> loadDict() async {
+  Future<void> loadDict([String? dirPath]) async {
     _dict = DictSegment('');
-    var file = await rootBundle.loadString(MAIN_DICT);
+    String file;
+    if(dirPath == null) {
+      file = await rootBundle.loadString(MAIN_DICT);
+    }else{
+      file = await File(dirPath + "/dict.txt").readAsStringSync();
+    }
     for (var line in file.split("\n")) {
       List<String> tokens = line.split(RegExp(r'[\t ]+'));
 
