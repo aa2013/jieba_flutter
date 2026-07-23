@@ -72,7 +72,7 @@ class WordDictionary {
     if(dirPath == null) {
       file = await rootBundle.loadString(MAIN_DICT);
     }else{
-      file = await File(dirPath + "/dict.txt").readAsStringSync();
+      file = await File(dirPath + "/dict.txt").readAsString();
     }
     for (var line in file.split("\n")) {
       List<String> tokens = line.split(RegExp(r'[\t ]+'));

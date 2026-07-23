@@ -63,7 +63,7 @@ class FinalSeg {
     if(dirPath == null) {
       file = await rootBundle.loadString(PROB_EMIT);
     }else{
-      file = await File(dirPath + "/prob_emit.txt").readAsStringSync();
+      file = await File(dirPath + "/prob_emit.txt").readAsString();
     }
 
     emit = {};
